@@ -38,7 +38,9 @@ jobs:
 
     - name: Top-level directories
       run: |
-        du -h --max-depth=1 / 2>/dev/null | sort -hr | head -n 20
+        du -h --max-depth=1 / 2>/dev/null >du-sh.txt
+        sort -hr du-sh.txt > sorted-du-sh.txt
+        head -20 sorted-du-sh.txt
 
     - name: Aggressive cleanup
       run: |
