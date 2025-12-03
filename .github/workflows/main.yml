@@ -32,44 +32,44 @@ jobs:
       packages: write
 
     steps:
-    - name: Show disk usage
-      run: |
-        df -h
-
-    - name: Top-level directories
-      run: |
-        du -h --max-depth=1 / 2>/dev/null >du-sh.txt
-        sort -hr du-sh.txt > sorted-du-sh.txt
-        head -20 sorted-du-sh.txt
-
-    - name: Aggressive cleanup
-      run: |
-       # Remove Java (JDKs)
-        rm -rf /usr/lib/jvm
-        # Remove .NET SDKs
-        rm -rf /usr/share/dotnet
-        # Remove Swift toolchain
-        rm -rf /usr/share/swift
-        # Remove Haskell (GHC)
-        rm -rf /usr/local/.ghcup
-        # Remove Julia
-        rm -rf /usr/local/julia*
-        # Remove Android SDKs
-        rm -rf /usr/local/lib/android
-        # Remove Chromium (optional if not using for browser tests)
-        rm -rf /usr/local/share/chromium
-        # Remove Microsoft/Edge and Google Chrome builds
-        rm -rf /opt/microsoft /opt/google
-        # Remove Azure CLI
-        rm -rf /opt/az
-        # Remove PowerShell
-        rm -rf /usr/local/share/powershell
-        # Remove CodeQL and other toolcaches
-        rm -rf /opt/hostedtoolcache
-        docker system prune -af || true
-        docker builder prune -af || true
-        df -h
-
+      - name: Show disk usage
+        run: |
+          df -h
+  
+      - name: Top-level directories
+        run: |
+          du -h --max-depth=1 / 2>/dev/null >du-sh.txt
+          sort -hr du-sh.txt > sorted-du-sh.txt
+          head -20 sorted-du-sh.txt
+  
+      - name: Aggressive cleanup
+        run: |
+         # Remove Java (JDKs)
+          rm -rf /usr/lib/jvm
+          # Remove .NET SDKs
+          rm -rf /usr/share/dotnet
+          # Remove Swift toolchain
+          rm -rf /usr/share/swift
+          # Remove Haskell (GHC)
+          rm -rf /usr/local/.ghcup
+          # Remove Julia
+          rm -rf /usr/local/julia*
+          # Remove Android SDKs
+          rm -rf /usr/local/lib/android
+          # Remove Chromium (optional if not using for browser tests)
+          rm -rf /usr/local/share/chromium
+          # Remove Microsoft/Edge and Google Chrome builds
+          rm -rf /opt/microsoft /opt/google
+          # Remove Azure CLI
+          rm -rf /opt/az
+          # Remove PowerShell
+          rm -rf /usr/local/share/powershell
+          # Remove CodeQL and other toolcaches
+          rm -rf /opt/hostedtoolcache
+          docker system prune -af || true
+          docker builder prune -af || true
+          df -h
+  
       - name: Checkout repository
         uses: actions/checkout@v3
 
