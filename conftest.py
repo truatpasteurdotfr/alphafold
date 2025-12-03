@@ -1,4 +1,4 @@
-# Copyright 2021 DeepMind Technologies Limited
+# Copyright 2025 DeepMind Technologies Limited
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,26 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Shared utilities for various components."""
-import tensorflow.compat.v1 as tf
+"""Fixture for pytest.
+
+This is needed to parse the absl flags before running the test.
+"""
+
+import sys
+
+from absl import flags
+import pytest
 
 
-class SeedMaker(object):
-  """Return unique seeds."""
-
-  def __init__(self, initial_seed=0):
-    self.next_seed = initial_seed
-
-  def __call__(self):
-    i = self.next_seed
-    self.next_seed += 1
-    return i
-
-
-seed_maker = SeedMaker()
-
-
-def make_random_seed():
-  return tf.random.uniform(
-      [2], tf.int32.min, tf.int32.max, tf.int32, seed=seed_maker()
-  )
+@pytest.fixture(scope="session", autouse=True)
+def initialize_absl_flags(request):
+  del request
+  # Parse any flags that make sense to absl as absl flags.
+  flags.FLAGS(sys.argv, known_only=True)
